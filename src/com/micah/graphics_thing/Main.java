@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Main {
-    public static final int TARGET_TPS = 60;
+    public static final int TARGET_TPS = 20;
     public static final int TARGET_FPS = 60;
     public static final double NANOS_PER_SECOND = 1e9D;
 
@@ -108,7 +108,8 @@ public class Main {
         }
 
         graphics.setColor(Color.GRAY);
-        graphics.drawString(Integer.toString(fps), 0, 15);
+        graphics.drawString("FPS: " + Integer.toString(fps), 0, 15);
+        graphics.drawString("TPS: " + Integer.toString((int) tps), 0, 30);
 
         frame.getGraphics().drawImage(canvas, 0, 0, frame);
     }

@@ -14,7 +14,7 @@ public class Entity {
     public Entity(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
-        motionX = 0;
+        motionX = 5;
         motionY = 0;
     }
 
@@ -30,8 +30,7 @@ public class Entity {
     }
 
     public void tickAirResistance() {
-        motionX /= 1.2;
-        motionY /= 1.2;
+        motionY /= 1.01;
     }
 
     public void tickGravity() {
