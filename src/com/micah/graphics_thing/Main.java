@@ -2,7 +2,6 @@ package com.micah.graphics_thing;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -65,7 +64,6 @@ public class Main {
     }
 
     private void init() {
-
         entities.add(new EntityText("dong", Color.MAGENTA, 200, 200));
     }
 
@@ -108,8 +106,8 @@ public class Main {
         }
 
         graphics.setColor(Color.GRAY);
-        graphics.drawString("FPS: " + Integer.toString(fps), 0, 15);
-        graphics.drawString("TPS: " + Integer.toString((int) tps), 0, 30);
+        graphics.drawString(String.format("FPS: %d", fps), 0, 15);
+        graphics.drawString(String.format("TPS: %.2f", tps), 0, 30);
 
         frame.getGraphics().drawImage(canvas, 0, 0, frame);
     }

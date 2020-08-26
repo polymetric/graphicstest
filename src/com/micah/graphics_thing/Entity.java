@@ -8,6 +8,7 @@ public class Entity {
     public double motionX;
     public double motionY;
     public int entityId;
+    public HitboxRect hitbox;
 
     public Entity() {}
 
