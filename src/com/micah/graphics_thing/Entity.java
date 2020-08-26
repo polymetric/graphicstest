@@ -8,18 +8,18 @@ public class Entity {
     public double motionX;
     public double motionY;
     public int entityId;
-    public HitboxRect hitbox;
 
     public Entity() {}
 
     public Entity(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
-        motionX = 5;
-        motionY = 0;
+        motionX = 10;
+        motionY = -10;
     }
 
     public void tick() {
+        tickCollisions();
         tickVelocity();
         tickAirResistance();
         tickGravity();
@@ -31,12 +31,21 @@ public class Entity {
     }
 
     public void tickAirResistance() {
-        motionY /= 1.01;
+        motionY *= 0.98D;
     }
 
     public void tickGravity() {
-        if (motionY < 20) {
-            motionY++;
+        if (motionY < 10) {
+            motionY += .33D;
+        }
+    }
+
+    public void tickCollisions() {
+        if (posX >= Main.main.displayWidth - 30 || posX <= 0) {
+            motionX *= -1;
+        }
+        if (posY >= Main.main.displayHeight || posY <= 15) {
+            motionY *= -1;
         }
     }
 

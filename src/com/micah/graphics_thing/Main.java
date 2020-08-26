@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Main {
-    public static final int TARGET_TPS = 20;
-    public static final int TARGET_FPS = 60;
+    public static final int TARGET_TPS = 15;
+    public static final int TARGET_FPS = 15;
     public static final double NANOS_PER_SECOND = 1e9D;
 
     public static Main main;
@@ -34,6 +34,8 @@ public class Main {
     public int displayWidth;
     public int displayHeight;
 
+    public boolean fastFwd;
+
     public Main() {
         // game logic
         lastTick = System.nanoTime();
@@ -43,8 +45,8 @@ public class Main {
         lastRender = System.nanoTime();
         frames = 0;
 
-        displayWidth = 400;
-        displayHeight = 400;
+        displayWidth = 1000;
+        displayHeight = 1000;
 
         frame = new JFrame();
         canvas = new BufferedImage(displayWidth, displayHeight, BufferedImage.TYPE_INT_RGB);
@@ -64,7 +66,7 @@ public class Main {
     }
 
     private void init() {
-        entities.add(new EntityText("dong", Color.MAGENTA, 200, 200));
+        entities.add(new EntityText("dong", Color.MAGENTA, 500, 500));
     }
 
     public void run() {
