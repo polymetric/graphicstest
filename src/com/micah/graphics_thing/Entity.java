@@ -3,49 +3,53 @@ package com.micah.graphics_thing;
 import java.awt.*;
 
 public class Entity {
+    public static final double LIMIT_VEL_UPPER = 10;
+    public static final double LIMIT_VEL_LOWER = 0.1;
+
     public double posX;
     public double posY;
-    public double motionX;
-    public double motionY;
+    public double velX;
+    public double velY;
     public int entityId;
 
-    public Entity() {}
+    public Entity() {
+    }
 
     public Entity(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
-        motionX = 10;
-        motionY = -10;
+        velX = 200;
+        velY = -200;
     }
 
     public void tick() {
         tickCollisions();
-        tickVelocity();
         tickAirResistance();
         tickGravity();
+
+        tickVelocity();
     }
 
     public void tickVelocity() {
-        posX += motionX;
-        posY += motionY;
+        posX += velX/Main.main.tps;
+        posY += velY/Main.main.tps;
     }
 
     public void tickAirResistance() {
-        motionY *= 0.98D;
+        velX *= 0.98D;
+        velY *= 0.98D;
     }
 
     public void tickGravity() {
-        if (motionY < 10) {
-            motionY += .33D;
-        }
+        velY += 20;
     }
 
     public void tickCollisions() {
         if (posX >= Main.main.displayWidth - 30 || posX <= 0) {
-            motionX *= -1;
+            velX *= -1;
         }
         if (posY >= Main.main.displayHeight || posY <= 15) {
-            motionY *= -1;
+            velY *= -1;
         }
     }
 

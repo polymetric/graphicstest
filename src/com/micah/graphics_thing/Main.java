@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Main {
-    public static final int TARGET_TPS = 15;
-    public static final int TARGET_FPS = 15;
+    public double targetTps = 60;
+    public int targetFps = 60;
     public static final double NANOS_PER_SECOND = 1e9D;
 
     public static Main main;
@@ -15,6 +15,8 @@ public class Main {
     public JFrame frame;
     public BufferedImage canvas;
     public Graphics graphics;
+
+    public KeyHandler keyHandler;
 
     // List of entities
     public ArrayList<Entity> entities;
@@ -52,6 +54,8 @@ public class Main {
         canvas = new BufferedImage(displayWidth, displayHeight, BufferedImage.TYPE_INT_RGB);
         graphics = canvas.getGraphics();
 
+        keyHandler = new KeyHandler();
+
         setupFrame();
 
         entities = new ArrayList<Entity>();
@@ -59,10 +63,12 @@ public class Main {
     }
 
     private void setupFrame() {
-        frame.setUndecorated(true);
+//        frame.setUndecorated(true);
+//        frame.setResizable(false);
         frame.setSize(displayWidth, displayHeight);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+        frame.addKeyListener(keyHandler);
     }
 
     private void init() {
@@ -70,12 +76,12 @@ public class Main {
     }
 
     public void run() {
-        while(true) {
+        while (true) {
             long now = System.nanoTime();
             logicDelta = now - lastTick;
             renderDelta = now - lastRender;
 
-            if (logicDelta >= NANOS_PER_SECOND / TARGET_TPS) {
+            if (logicDelta >= NANOS_PER_SECOND / targetTps) {
                 tps = NANOS_PER_SECOND / logicDelta;
                 this.tick();
 //                System.out.println(tps);
@@ -83,7 +89,7 @@ public class Main {
                 ticks++;
             }
 
-            if (renderDelta >= NANOS_PER_SECOND / TARGET_FPS) {
+            if (renderDelta >= NANOS_PER_SECOND / targetFps) {
                 fps = (int) Math.ceil(NANOS_PER_SECOND / renderDelta);
                 this.render();
 //                System.out.println(fps);
@@ -94,6 +100,18 @@ public class Main {
     }
 
     public void tick() {
+        if (fastFwd) {
+            if (targetTps < 60 * 8) {
+                targetTps += 2.5;
+            }
+        } else {
+            for (int i = 0; i < 20; i++) {
+                if (targetTps > 60) {
+                    targetTps -= .5;
+                }
+            }
+        }
+
         for (Entity e : entities) {
             e.tick();
         }

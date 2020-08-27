@@ -9,15 +9,19 @@ public class KeyHandler implements KeyListener {
         int k = e.getKeyCode();
 
         if (k == KeyEvent.VK_L) {
-            
+            Main.main.fastFwd = true;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        int k = e.getKeyCode();
+
+        if (k == KeyEvent.VK_L) {
+            Main.main.fastFwd = false;
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {}
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
 }
